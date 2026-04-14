@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
+import Link from 'next/link'; // <-- Dette er Next.js sin super-lenke
 
 export default function Home() {
   const [input, setInput] = useState('');
@@ -38,28 +39,32 @@ export default function Home() {
   return (
     <div style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: '#1a1a1a', lineHeight: '1.6', margin: 0, padding: 0 }}>
 
-      {/* 1. Header / Meny */}
+      {/* 1. Header / Meny (Nå med ekte lenker) */}
       <header style={{ backgroundColor: '#111', color: '#fff', padding: '20px 50px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h1 style={{ margin: 0, fontSize: '24px', fontWeight: '800', letterSpacing: '1px' }}>NITTEDAL <span style={{ color: '#e63946' }}>AUTO</span></h1>
+        <Link href="/" style={{ textDecoration: 'none', color: '#fff' }}>
+          <h1 style={{ margin: 0, fontSize: '24px', fontWeight: '800', letterSpacing: '1px' }}>NITTEDAL <span style={{ color: '#e63946' }}>AUTO</span></h1>
+        </Link>
         <nav style={{ display: 'flex', gap: '30px', fontWeight: '500' }}>
-          <span style={{ cursor: 'pointer' }}>Tjenester</span>
-          <span style={{ cursor: 'pointer' }}>Om oss</span>
-          <span style={{ cursor: 'pointer' }}>Kontakt</span>
+          <Link href="/tjenester" style={{ color: '#fff', textDecoration: 'none' }}>Tjenester</Link>
+          <Link href="/om-oss" style={{ color: '#fff', textDecoration: 'none' }}>Om oss</Link>
+          <Link href="/kontakt" style={{ color: '#fff', textDecoration: 'none' }}>Kontakt</Link>
         </nav>
       </header>
 
-      {/* 2. Hero Section (Hovedblikkfang for SEO) */}
+      {/* 2. Hero Section */}
       <section style={{ backgroundColor: '#f4f4f5', padding: '100px 20px', textAlign: 'center', borderBottom: '1px solid #e5e5e5' }}>
         <h2 style={{ fontSize: '48px', margin: '0 0 20px 0', fontWeight: '800' }}>Ditt pålitelige bilverksted</h2>
         <p style={{ fontSize: '20px', maxWidth: '650px', margin: '0 auto 40px auto', color: '#4a4a4a' }}>
           Vi utfører service, EU-kontroll og reparasjoner på alle bilmerker. Opplev trygghet på veien med sertifiserte mekanikere.
         </p>
-        <button style={{ padding: '18px 40px', fontSize: '18px', backgroundColor: '#e63946', color: '#fff', border: 'none', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 6px rgba(230, 57, 70, 0.3)' }}>
+
+        {/* Knappen er nå gjort om til en lenke, men ser ut som en knapp */}
+        <Link href="/bestill" style={{ display: 'inline-block', padding: '18px 40px', fontSize: '18px', backgroundColor: '#e63946', color: '#fff', textDecoration: 'none', borderRadius: '4px', fontWeight: 'bold', boxShadow: '0 4px 6px rgba(230, 57, 70, 0.3)' }}>
           Bestill Time Nå
-        </button>
+        </Link>
       </section>
 
-      {/* 3. Tjenester Grid (Strukturert innhold for SEO) */}
+      {/* 3. Tjenester Grid */}
       <section style={{ padding: '80px 20px', maxWidth: '1100px', margin: '0 auto' }}>
         <h3 style={{ textAlign: 'center', fontSize: '32px', marginBottom: '50px', fontWeight: '700' }}>Hva vi tilbyr</h3>
         <div style={{ display: 'flex', gap: '30px', flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -73,7 +78,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4. AI Assistent Seksjonen (Din funksjonalitet) */}
+      {/* 4. AI Assistent Seksjonen */}
       <section style={{ backgroundColor: '#111', color: '#fff', padding: '80px 20px' }}>
         <div style={{ maxWidth: '750px', margin: '0 auto' }}>
           <h3 style={{ textAlign: 'center', fontSize: '32px', marginBottom: '15px', fontWeight: '700' }}>Spør vår Digitale Mekaniker</h3>
