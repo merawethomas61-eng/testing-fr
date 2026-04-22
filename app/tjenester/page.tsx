@@ -1,47 +1,106 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
+import Header from '@/app/components/Header';
+import Footer from '@/app/components/Footer';
+import Breadcrumbs from '@/app/components/Breadcrumbs';
+import CTASection from '@/app/components/CTASection';
+import { services } from '@/app/lib/services';
 
-export default function Tjenester() {
-    const tjenester = [
-        { tittel: 'EU-Kontroll', pris: 'Fra 1.190,-', beskrivelse: 'Lovpålagt sikkerhetssjekk utført av sertifiserte fagfolk. Vi går grundig gjennom kjøretøyet ditt.' },
-        { tittel: 'Hovedservice', pris: 'Fra 3.490,-', beskrivelse: 'Omfattende service inkludert oljeskift, filterbytte og full diagnose av bilens vitale systemer.' },
-        { tittel: 'Feilsøking & Diagnose', pris: 'Fra 990,-', beskrivelse: 'Lyser en lampe? Vi bruker avansert diagnoseutstyr for å lokalisere elektroniske og mekaniske feil.' },
-        { tittel: 'Dekk & Felg', pris: 'Etter avtale', beskrivelse: 'Omlegging, avbalansering og dekkhotell. Vi fører premiummerker for optimalt veigrep.' },
-        { tittel: 'Bremser & Slitedeler', pris: 'Pris på forespørsel', beskrivelse: 'Utskifting av klosser, skiver og calipere. Sikkerhet på veien er vår absolutte prioritet.' },
-        { tittel: 'AC-Service', pris: 'Fra 1.490,-', beskrivelse: 'Rens og påfyll av gass for klimaanlegget, slik at du har frisk og kald luft i kupeen hele året.' }
-    ];
+export const metadata: Metadata = {
+    title: 'Tjenester og priser | Nittedal Auto – Komplett bilverksted',
+    description:
+        'EU-kontroll, hovedservice, bremser, dekkhotell, elbil-service og mye mer. Vi fikser alle bilmerker med fastpris og full garanti. Se hele listen over tjenester og priser.',
+    keywords: [
+        'bilverksted Nittedal',
+        'EU-kontroll',
+        'hovedservice',
+        'dekkhotell',
+        'elbil verksted',
+        'bilservice',
+    ],
+};
 
+export default function TjenesterOversikt() {
     return (
-        <div style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: '#1a1a1a', margin: 0, padding: 0 }}>
-            {/* Header */}
-            <header style={{ backgroundColor: '#111', padding: '20px 50px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Link href="/" style={{ textDecoration: 'none', color: '#fff' }}>
-                    <h1 style={{ margin: 0, fontSize: '24px', fontWeight: '800', letterSpacing: '1px' }}>NITTEDAL <span style={{ color: '#e63946' }}>AUTO</span></h1>
-                </Link>
-                <nav style={{ display: 'flex', gap: '30px', fontWeight: '500' }}>
-                    <Link href="/tjenester" style={{ color: '#e63946', textDecoration: 'none' }}>Tjenester</Link>
-                    <Link href="/om-oss" style={{ color: '#fff', textDecoration: 'none' }}>Om oss</Link>
-                    <Link href="/kontakt" style={{ color: '#fff', textDecoration: 'none' }}>Kontakt</Link>
-                </nav>
-            </header>
+        <div style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: '#1a1a1a' }}>
+            <Header active="tjenester" />
+            <Breadcrumbs items={[{ label: 'Tjenester' }]} />
 
-            {/* Main Content */}
-            <main style={{ maxWidth: '1200px', margin: '80px auto', padding: '0 20px' }}>
+            <main style={{ maxWidth: '1200px', margin: '40px auto 0 auto', padding: '0 20px' }}>
                 <div style={{ marginBottom: '60px' }}>
-                    <h2 style={{ fontSize: '14px', textTransform: 'uppercase', letterSpacing: '2px', color: '#e63946', margin: '0 0 10px 0' }}>Vår Ekspertise</h2>
-                    <h1 style={{ fontSize: '48px', fontWeight: '800', margin: 0, color: '#111' }}>Tjenester & Priser</h1>
-                    <p style={{ fontSize: '20px', color: '#666', maxWidth: '600px', marginTop: '20px' }}>Vi tilbyr et komplett spekter av verkstedtjenester for alle bilmerker, med fokus på presisjon og kvalitet.</p>
+                    <h2 style={{ fontSize: '14px', textTransform: 'uppercase', letterSpacing: '2px', color: '#e63946', margin: '0 0 10px 0' }}>
+                        Vår Ekspertise
+                    </h2>
+                    <h1 style={{ fontSize: '48px', fontWeight: 800, margin: 0, color: '#111' }}>
+                        Tjenester & priser
+                    </h1>
+                    <p style={{ fontSize: '20px', color: '#555', maxWidth: '720px', marginTop: '20px', lineHeight: 1.6 }}>
+                        Vi tilbyr et komplett spekter av verkstedtjenester for alle bilmerker i Nittedal og omegn.
+                        Fastpris før vi starter, 24 måneders garanti på arbeid, og en ærlig diagnose du kan stole på.
+                    </p>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '30px' }}>
-                    {tjenester.map((t, i) => (
-                        <div key={i} style={{ padding: '40px', backgroundColor: '#fafafa', border: '1px solid #eaeaea', borderRadius: '4px' }}>
-                            <h3 style={{ fontSize: '22px', margin: '0 0 10px 0' }}>{t.tittel}</h3>
-                            <p style={{ fontSize: '14px', fontWeight: 'bold', color: '#e63946', margin: '0 0 20px 0' }}>{t.pris}</p>
-                            <p style={{ fontSize: '16px', color: '#555', lineHeight: '1.6', margin: 0 }}>{t.beskrivelse}</p>
-                        </div>
+                <div
+                    style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+                        gap: '24px',
+                        marginBottom: '80px',
+                    }}
+                >
+                    {services.map((s) => (
+                        <Link
+                            key={s.slug}
+                            href={`/tjenester/${s.slug}`}
+                            style={{
+                                padding: '32px',
+                                backgroundColor: '#fafafa',
+                                border: '1px solid #eaeaea',
+                                borderRadius: '6px',
+                                textDecoration: 'none',
+                                color: '#111',
+                                display: 'block',
+                                transition: 'all 0.2s',
+                            }}
+                        >
+                            <h3 style={{ fontSize: '22px', margin: '0 0 8px 0', fontWeight: 700 }}>{s.shortTitle}</h3>
+                            <p style={{ fontSize: '13px', fontWeight: 700, color: '#e63946', margin: '0 0 16px 0' }}>
+                                Fra {s.priceFrom} · {s.duration}
+                            </p>
+                            <p style={{ fontSize: '15px', color: '#555', lineHeight: 1.6, margin: 0 }}>{s.tagline}</p>
+                            <p style={{ marginTop: '16px', color: '#e63946', fontWeight: 600, fontSize: '14px' }}>
+                                Les mer →
+                            </p>
+                        </Link>
                     ))}
                 </div>
+
+                <section
+                    style={{
+                        padding: '60px',
+                        backgroundColor: '#111',
+                        color: '#fff',
+                        borderRadius: '8px',
+                        marginBottom: '80px',
+                    }}
+                >
+                    <h2 style={{ fontSize: '32px', fontWeight: 800, margin: '0 0 20px 0' }}>
+                        Alt du trenger – på ett sted
+                    </h2>
+                    <p style={{ fontSize: '17px', lineHeight: 1.7, color: '#ccc', maxWidth: '800px' }}>
+                        Vi er et komplett bilverksted som kan ta imot bilen din for service, reparasjon, EU-kontroll,
+                        dekkskifte og spesialistoppdrag. Vi bruker originaldeler og premium-kvalitetsdeler fra
+                        anerkjente merker som Bosch, Brembo, Sachs, Valeo og Gates. Alt arbeid utføres av erfarne
+                        teknikere med full dokumentasjon.
+                    </p>
+                </section>
             </main>
+
+            <CTASection
+                heading="Klar for å bestille?"
+                text="Bruk bestillingsskjemaet, eller ring oss direkte. Vi gir deg fastpris før vi starter jobben."
+            />
+            <Footer />
         </div>
     );
 }
